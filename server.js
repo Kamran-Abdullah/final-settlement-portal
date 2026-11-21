@@ -103,7 +103,7 @@ function assemble(sid) {
   const noticeBase = s.notice_base_override != null ? s.notice_base_override : slip ? slip.notice_base : emp.gross || 0;
   const lastSalaryMonth = s.last_salary_month || (slip ? slip.month : null);
   const org = ctype === 'healthcare' ? getSetting('org_healthcare') : ctype === 'trade' || ctype === 'generic' ? getSetting('org_trade') : getSetting('org_pharma');
-  const trainingApplies = sourceKey(emp) === 'marketing' && (!emp.company || /pvt/i.test(emp.company));        // only Marketing staff of Acme Pharmaceuticals Pvt Limited pay the training cost
+  const trainingApplies = sourceKey(emp) === 'marketing' && (!emp.company || /pvt/i.test(emp.company));        // only Marketing staff of ABCD Pharma Pvt Limited pay the training cost
   const statementCalc = calc({
     trainingApplies,
     emp: { id: s.emp_id, name: emp.name, designation: title, designationCode: emp.designation_code, group: emp.group_name, station: emp.station, doj: emp.doj }, companyType: ctype, org,
@@ -244,7 +244,7 @@ function createApp() {
   app.get('/api/employees/bulk-template', wrap(async (req, res) => {
     const ExcelJS = require('exceljs'), wb = new ExcelJS.Workbook(), ws = wb.addWorksheet('Resigners');
     ws.addRow(BULK.map((c) => c[1])); ws.getRow(1).font = { bold: true }; ws.columns = BULK.map((c) => ({ width: Math.max(16, c[1].length + 4) }));
-    ws.addRow(['99001', 'Example Name', 'TM', 'Group A', 'Lahore', '2024-03-01', '2026-10-31', 85000, 'Confirmed', '35202-1234567-1', 'Acme Pharmaceuticals Pvt Limited']);
+    ws.addRow(['99001', 'Example Name', 'TM', 'Group A', 'Lahore', '2024-03-01', '2026-10-31', 85000, 'Confirmed', '35202-1234567-1', 'ABCD Pharma Pvt Limited']);
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); res.setHeader('Content-Disposition', 'attachment; filename="resigners-template.xlsx"');
     await wb.xlsx.write(res); res.end();
   }, true));
@@ -417,8 +417,8 @@ function createApp() {
   }));
   app.put('/api/settlements/:id/posting', wrap((req) => {
     const s = get(req.params.id); open(req, s, 'finance'); const b = req.body || {};
-    db.prepare('UPDATE settlements SET cheque_main=?, cheque_pf=?, vem_code=?, updated_at=CURRENT_TIMESTAMP WHERE id=?').run(txt(b.cheque_main, 40) || null, txt(b.cheque_pf, 40) || null, txt(b.vem_code, 40) || null, s.id);
-    audit(U(req).username, s.emp_id, 'posting details saved', { cheque: txt(b.cheque_main, 40), pfCheque: txt(b.cheque_pf, 40), vem: txt(b.vem_code, 40) }); return { ok: true };
+    db.prepare('UPDATE settlements SET cheque_main=?, cheque_pf=?, imprest_code=?, updated_at=CURRENT_TIMESTAMP WHERE id=?').run(txt(b.cheque_main, 40) || null, txt(b.cheque_pf, 40) || null, txt(b.imprest_code, 40) || null, s.id);
+    audit(U(req).username, s.emp_id, 'posting details saved', { cheque: txt(b.cheque_main, 40), pfCheque: txt(b.cheque_pf, 40), ledgerCode: txt(b.imprest_code, 40) }); return { ok: true };
   }));
   app.get('/api/settlements/:id/posting.xlsx', wrap(async (req, res) => {
     const a = assemble(req.params.id), p = a.posting, ExcelJS = require('exceljs'), wb = new ExcelJS.Workbook(), ws = wb.addWorksheet('Posting');

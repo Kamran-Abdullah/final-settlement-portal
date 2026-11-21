@@ -54,7 +54,7 @@ function whyOf(B, kind, d) {
   if (kind === 'd') {
     if (d.code === 'salary') return `${fmt2(s.absent_days || 0)} absent day(s) x Rs ${fmt(gross)} / 30${/early/i.test(d.note || '') ? ' + early leaving before the resignation date' : ''}.`;
     if (d.code === 'notice') return `${rule ? rule.explanation : h.rule}. Notice base Rs ${fmt(B.inputs.noticeBase)} (salary + increment, without allowances).`;
-    if (d.code === 'training') return `Training and orientation cost: Marketing staff of Acme Pharmaceuticals Pvt Limited who resign within 6 months of joining${note}.`;
+    if (d.code === 'training') return `Training and orientation cost: Marketing staff of ABCD Pharma Pvt Limited who resign within 6 months of joining${note}.`;
     if (d.code === 'eobi') return `EOBI per month from the salary slip x the months with more than 15 days${note}.`;
     if (d.code === 'medical') return `Medical per month from the salary slip x the months with more than 15 days${note}.`;
     if (d.code === 'imprest') return `Imprest balance from Marketing${s.imprest_note ? ' - ' + s.imprest_note : ''}: a positive balance is recovered from the employee.`;

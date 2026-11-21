@@ -65,7 +65,7 @@ async function parseFile(file, sheetName) {
 }
 
 // scan the folder for payroll files and import the new / changed ones
-async function importFolder(folder, { sheet = getSetting('slip_sheet', 'Salary'), keyword = getSetting('trade_keyword', 'Pharmaceuticals') } = {}) {
+async function importFolder(folder, { sheet = getSetting('slip_sheet', 'Salary'), keyword = getSetting('trade_keyword', 'Pharma') } = {}) {
   if (!folder || !fs.existsSync(folder)) throw Object.assign(new Error('The payroll Excel folder was not found. Check Setting > Data sources.'), { status: 400 });
   const files = fs.readdirSync(folder).filter((f) => /\.xlsx$/i.test(f) && !f.startsWith('~$') && monthFromName(f));
   const report = [];
@@ -152,7 +152,7 @@ function importPayrollDb(srcKey, file) {
   return out;
 }
 // an Excel file chosen by the user (any of the four payrolls)
-async function importUpload(buffer, fileName, { source = 'marketing', month = '', sheet = getSetting('slip_sheet', 'Salary'), keyword = getSetting('trade_keyword', 'Pharmaceuticals') } = {}) {
+async function importUpload(buffer, fileName, { source = 'marketing', month = '', sheet = getSetting('slip_sheet', 'Salary'), keyword = getSetting('trade_keyword', 'Pharma') } = {}) {
   const os = require('os'), tmp = path.join(os.tmpdir(), `ufsa-up-${Date.now()}.xlsx`);
   fs.writeFileSync(tmp, buffer);
   try {

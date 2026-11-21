@@ -84,14 +84,14 @@ function seedDefaults() {
   const r = db.prepare('INSERT OR IGNORE INTO sep_rules(code,explanation,sort) VALUES(?,?,?)'); DEFAULT_RULES.forEach(([c, e], i) => r.run(c, e, i));
   for (const t of ['Misconduct', 'Non-Compliance Policy', 'NILL']) db.prepare('INSERT OR IGNORE INTO termination_reasons(label) VALUES(?)').run(t);
   const d = {
-    org_pharma: 'ACME PHARMACEUTICALS (PVT.) LTD.', org_trade: 'ACME PHARMACEUTICALS', org_healthcare: 'NORTHWIND HEALTHCARE (PVT.) LTD.',
+    org_pharma: 'ABCD PHARMA (PVT.) LTD.', org_trade: 'ABCD PHARMA', org_healthcare: 'NORTHWIND HEALTHCARE (PVT.) LTD.',
     days_in_month: '30', training_cost: '10000', training_days: '180', expense_months: '3',
     pf_bank_name: 'Demo PF Bank', main_bank_name: 'Demo Bank Limited',
     sign1_name: 'Jane Doe', sign1_title: 'General Manager Finance', sign2_name: 'John Smith', sign2_title: 'Manager Internal Audit',
     letter_note: 'PLEASE SIGN THE DUPLICATE COPY OF THIS LETTER AS ACKNOWLEDGEMENT OF FINAL SETTLEMENT, AND BE ADVISED THAT RECEIVING AND SIGNING THIS DOCUMENT SHALL ENDORSE YOUR FULL, FINAL AND WILLFUL ACCEPTANCE AND RECEIPT OF ALL YOUR DUES AND CLAIMS UPON THE COMPANY.',
     payroll_db_path: '', payroll_db_healthcare: '',
     pf_db_path: '', payroll_db_admin: '', payroll_db_factory: '', pf_url: 'http://localhost:3000', pf_user: '', pf_pass: '',
-    slip_folder: '', slip_sheet: 'Salary', trade_keyword: 'Pharmaceuticals',
+    slip_folder: '', slip_sheet: 'Salary', trade_keyword: 'Pharma',
     post_fsa_marketing: 'GL-1001', post_fsa_admin: 'GL-1002', post_fsa_factory: 'GL-1003', post_fsa_healthcare: '', post_fsa_name: 'FSA',
     post_bank_code: 'GL-2001', post_bank_name: 'Demo Bank A/C # 000000', post_pf_code: 'GL-3001', post_pf_name: 'Provident Fund Payable',
     post_rec_code: 'GL-4001', post_rec_name: 'FSA Receivable', post_sal_code: 'GL-5001', post_sal_name: 'Salaries, Wages & Benefits', post_imp_name: 'Imprest Ledger', post_bank_prefix: '', post_pf_prefix: '',
@@ -102,7 +102,7 @@ function seedDefaults() {
 }
 (function ensureColumns() {
   const has = (t, c) => db.prepare(`PRAGMA table_info(${t})`).all().some((x) => x.name === c);
-  if (!has('settlements', 'vem_code')) db.exec('ALTER TABLE settlements ADD COLUMN vem_code TEXT');
+  if (!has('settlements', 'imprest_code')) db.exec('ALTER TABLE settlements ADD COLUMN imprest_code TEXT');
   if (!has('settlements', 'letter_edits')) db.exec('ALTER TABLE settlements ADD COLUMN letter_edits TEXT');
   if (!has('settlements', 'date_kind')) db.exec("ALTER TABLE settlements ADD COLUMN date_kind TEXT DEFAULT 'resignation'");
   for (const c of ['rate_km', 'rate_daily', 'rate_ex', 'rate_on']) if (!has('settlement_expenses', c)) db.exec(`ALTER TABLE settlement_expenses ADD COLUMN ${c} REAL`);

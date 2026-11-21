@@ -8,8 +8,8 @@ const fs = require('fs');
 const SOURCES = [
   { key: 'marketing', label: 'Marketing', kind: 'hcm', setting: 'payroll_db_path', source: 'Marketing payroll', company: '' },
   { key: 'healthcare', label: 'Healthcare', kind: 'hcm', setting: 'payroll_db_healthcare', source: 'Healthcare payroll', company: 'Northwind Healthcare Pvt Limited' },
-  { key: 'admin', label: 'Admin', kind: 'admin', setting: 'payroll_db_admin', source: 'Admin payroll', company: 'Acme Pharmaceuticals Pvt Limited' },
-  { key: 'factory', label: 'Factory', kind: 'admin', setting: 'payroll_db_factory', source: 'Factory payroll', company: 'Acme Pharmaceuticals Pvt Limited' },
+  { key: 'admin', label: 'Admin', kind: 'admin', setting: 'payroll_db_admin', source: 'Admin payroll', company: 'ABCD Pharma Pvt Limited' },
+  { key: 'factory', label: 'Factory', kind: 'admin', setting: 'payroll_db_factory', source: 'Factory payroll', company: 'ABCD Pharma Pvt Limited' },
 ];
 const byKey = (key) => SOURCES.find((s) => s.key === key) || SOURCES[0];
 

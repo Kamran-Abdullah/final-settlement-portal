@@ -237,7 +237,7 @@ function tPosting(B, ed) {
       ${P.warnings.map((w) => `<div class="banner warn" style="margin-top:12px">${IC.alert}<div>${esc(w)}</div></div>`).join('')}
       <div class="grid" style="margin-top:14px"><label>Cheque number (bank) - goes into the narration<input id="pc_chq" value="${esc(s.cheque_main || '')}" placeholder="#########" ${dis}></label>
         <label>Cheque number (provident fund bank)<input id="pc_pf" value="${esc(s.cheque_pf || '')}" ${dis}></label>
-        ${P.imprest !== 0 ? `<label>Imprest ledger (VEM) code<input id="pc_vem" value="${esc(s.vem_code || '')}" placeholder="VEM code" ${dis}></label>` : ''}</div>
+        ${P.imprest !== 0 ? `<label>Imprest ledger code<input id="pc_code" value="${esc(s.imprest_code || '')}" placeholder="Ledger code" ${dis}></label>` : ''}</div>
       ${can ? '<div style="margin-top:12px"><button class="btn primary" data-act="fin_posting_save">Save</button></div>' : ''}</div>
     <div class="card"><div class="row between"><div><h3>Name &amp; CNIC</h3><div class="sub" style="margin:0">For the payee line of the cheque / bank advice - not part of the posting.</div></div><button class="btn" data-act="fin_copy" data-what="payee">${IC.copy || ''} Copy</button></div>
       <div class="payee" id="pc_payee">${esc(payee)}</div></div>
@@ -259,7 +259,7 @@ ACT.fin_copy = async (a) => {
   catch { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); toast('Copied', 'ok'); } catch { toast('Copy is not possible here - select the text and press Ctrl+C', 'err'); } t.remove(); }
 };
 ACT.fin_posting_save = async () => {
-  const B = S.B, v = $('#pc_vem');
-  if (await act(() => api('PUT', `/api/settlements/${B.settlement.id}/posting`, { cheque_main: $('#pc_chq').value, cheque_pf: $('#pc_pf').value, vem_code: v ? v.value : B.settlement.vem_code }), 'Saved')) route();
+  const B = S.B, v = $('#pc_code');
+  if (await act(() => api('PUT', `/api/settlements/${B.settlement.id}/posting`, { cheque_main: $('#pc_chq').value, cheque_pf: $('#pc_pf').value, imprest_code: v ? v.value : B.settlement.imprest_code }), 'Saved')) route();
 };
 function tHistory(B) { $('#ftab').innerHTML = `<div class="card"><h3>History</h3><div class="sub">Every change made to this employee's settlement.</div>${timeline(B.log)}</div>`; }

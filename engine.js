@@ -36,7 +36,7 @@ function service(a, b) {
 /**
  * input = {
  *   emp: {id, name, designation, designationCode, group, station, doj},
- *   companyType: 'pharma'|'trade'|'generic'|'healthcare', org: 'ACME ... LTD.',
+ *   companyType: 'pharma'|'trade'|'generic'|'healthcare', org: 'ABCD ... LTD.',
  *   grossMonthly (E14), noticeBase (P39+Q39), eobi (U41), medical (S41), jobStatus: 'Confirmed'|'Unconfirmed'|null,
  *   resignDate (P5), lwd (P7), lastSalaryMonth 'YYYY-MM' (P8), sepRule (P6), absentDays (N36), imprest (signed: + deduction, - reimbursement),
  *   vehicleInst (V48),

@@ -20,7 +20,7 @@ function buildPosting({ st, emp, settlement, get }) {
   const net = r0(st.net), pfBal = r0(st.pfBalance), pfBank = r0(st.disbursement.pfBank), mainBank = r0(st.disbursement.mainBank), imprest = r0(settlement.imprest);
   const fsaCode = get('post_fsa_' + key) || '', fsaName = get('post_fsa_name') || 'FSA';
   if (!fsaCode) warnings.push(`The FSA ledger code of the ${key} payroll is not set (Setting > Posting accounts).`);
-  const vem = (settlement.vem_code || '').trim();
+  const ledgerCode = (settlement.imprest_code || '').trim();
   const name = String(emp.name || '').replace(/\s+/g, ' ').trim().toUpperCase(), id = emp.emp_id || settlement.emp_id;
   const narr = `FSA OF ${name} # ${id}`, narrBank = `${narr}  CHQ:{CHQ}`, narrPf = `${narr}  CHQ:{CHQPF}`;
   const chq = (settlement.cheque_main || '').trim(), chqPf = (settlement.cheque_pf || '').trim();
@@ -28,8 +28,8 @@ function buildPosting({ st, emp, settlement, get }) {
   const lines = [], add = (kind, code, account, dr, cr, tpl) => lines.push({ kind, code, account, debit: dr || 0, credit: cr || 0, tpl });
 
   if (imprest !== 0) {
-    if (!vem) warnings.push('Enter the imprest ledger (VEM) code of the employee.');
-    add('imprest', vem || 'VEM Code', get('post_imp_name') || 'Imprest Ledger', imprest < 0 ? -imprest : 0, imprest > 0 ? imprest : 0, narr);
+    if (!ledgerCode) warnings.push('Enter the imprest ledger code of the employee.');
+    add('imprest', ledgerCode || 'Ledger Code', get('post_imp_name') || 'Imprest Ledger', imprest < 0 ? -imprest : 0, imprest > 0 ? imprest : 0, narr);
   }
   const pfInside = pfBank === 0 && pfBal > 0;
   if (pfInside) add('pf', get('post_pf_code'), get('post_pf_name'), pfBal, 0, narrPf);
@@ -53,6 +53,6 @@ function buildPosting({ st, emp, settlement, get }) {
   const totalDr = lines.reduce((s, l) => s + l.debit, 0), totalCr = lines.reduce((s, l) => s + l.credit, 0);
   let kind = net < 0 ? 'Receivable from the employee' : pfBank > 0 ? 'Net payable; the provident fund is paid separately by the PF bank' : pfBal > 0 ? 'Net payable is less than the provident fund: the PF payable is cleared in this voucher' : 'Net payable, no provident fund';
   if (!lines.length) warnings.push('Nothing to post: the net amount is zero.');
-  return { lines, totalDr, totalCr, balanced: totalDr === totalCr, warnings, kind, source: key, hasChequeBank: mainBank > 0, cheque: chq, chequePf: chqPf, prefixes, vem, net, pfBank, mainBank, pfBal, imprest };
+  return { lines, totalDr, totalCr, balanced: totalDr === totalCr, warnings, kind, source: key, hasChequeBank: mainBank > 0, cheque: chq, chequePf: chqPf, prefixes, ledgerCode, net, pfBank, mainBank, pfBal, imprest };
 }
 module.exports = { buildPosting, sourceKey, PLACE };

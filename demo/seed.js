@@ -20,7 +20,7 @@ const EMP = [
   ['90008', 'Kashif Demo', 'STM', 'Group B', 'Quetta', '2020-11-03', 105000, 'Confirmed', '2026-11-18'],
 ];
 const TITLES = { TM: 'Territory Manager', STM: 'Senior Territory Manager', ASM: 'Area Sales Manager', RM: 'Regional Manager' };
-const COMPANY = 'Acme Pharmaceuticals Pvt Limited';
+const COMPANY = 'ABCD Pharma Pvt Limited';
 
 function seedDirect() {
   const { db, setSetting } = require('../db');

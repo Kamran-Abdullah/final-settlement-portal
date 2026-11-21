@@ -21,7 +21,7 @@ function monthOfSheet(name) {
   const y = m[2].length === 2 ? 2000 + Number(m[2]) : Number(m[2]);
   return `${y}-${String(MONTHS.indexOf(m[1].toLowerCase()) + 1).padStart(2, '0')}`;
 }
-const companyOf = (title) => (/health/i.test(title) ? 'healthcare' : /\(pvt\)/i.test(title) ? 'pharma' : /pharmaceuticals/i.test(title) ? 'trade' : 'pharma');
+const companyOf = (title) => (/health/i.test(title) ? 'healthcare' : /\(pvt\)/i.test(title) ? 'pharma' : /pharma/i.test(title) ? 'trade' : 'pharma');
 
 // header label -> field of the salary slip
 const EARN = [[/^salary$/, 'gross'], [/^increment/, 'conf'], [/^arrears$/, 'arrears'], [/^incentives?$/, 'incentive'], [/^specialinc/, 'special'], [/^conv/, 'conv'], [/^fuelallow/, 'fuel'], [/^tel\//, 'tel'],
@@ -100,7 +100,7 @@ async function readWorkbook(file, onSheet, progress = () => {}) {
     for await (const row of ws) {
       rows++; const v = row.values; if (rows % 4000 === 0) progress(ws.name, rows);
       const b2 = cv(v[2]);
-      if (typeof b2 === 'string' && /^(acme|northwind)/i.test(b2.trim())) { title = b2; }
+      if (typeof b2 === 'string' && /^(abcd|northwind)/i.test(b2.trim())) { title = b2; }
       if (has(v, 'empolyeeid.') || has(v, 'employeeid.')) { flush(); cur = []; last = title; }
       if (cur) cur.push(v);
     }
