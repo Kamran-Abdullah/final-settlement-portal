@@ -7,7 +7,7 @@ engine works out the dues (salary, provident fund, travelling expenses, deductio
 
 ![Settlement with checks](docs/screenshots/2-settlement.jpg)
 
-![Printable letter](docs/screenshots/3-letter.jpg)
+![Printable letter (Template 2, modern header)](docs/screenshots/3-letter.jpg)
 
 ![Master Data](docs/screenshots/4-master-data.jpg)
 
