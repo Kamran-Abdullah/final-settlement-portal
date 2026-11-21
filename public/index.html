@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Final Settlement</title>
+<link rel="stylesheet" href="vendor/inter.css">
+<link rel="stylesheet" href="app.css?v=202611181804">
+</head>
+<body>
+<section id="login" class="login hidden">
+  <div class="login-art">
+    <div class="brand-lg"><span class="logo"></span> Final Settlement</div>
+    <h1>Every dues calculation,<br>checked and on record.</h1>
+    <p>Resigners from the Marketing payroll, provident fund from the PF portal, salary slips from the payroll Excel - one settlement per Employee ID.</p>
+    <ul><li>HR &middot; Marketing &middot; Finance in one place</li><li>The Finance sheet logic, tested against your template</li><li>Every change is kept in an audit trail</li></ul>
+  </div>
+  <form id="loginForm" class="login-card">
+    <h2>Sign in</h2><p class="muted">Use the login given by the administrator</p>
+    <label>User<input id="lu" autocomplete="username" required autofocus></label>
+    <label>Password<input id="lp" type="password" autocomplete="current-password" required></label>
+    <button class="btn primary lg" type="submit">Sign in</button>
+    <p id="lerr" class="err"></p>
+  </form>
+</section>
+
+<div id="app" class="app hidden">
+  <aside class="side">
+    <div class="brand"><span class="logo"></span><span>Final Settlement</span></div>
+    <nav id="nav"></nav>
+    <div class="side-foot"><div class="who"><span class="avatar" id="avatar"></span><div><b id="whoName"></b><small id="whoRole"></small></div></div>
+      <button class="link" id="pwBtn">Change password</button><button class="link" id="outBtn">Sign out</button></div>
+  </aside>
+  <main class="main">
+    <header class="top">
+      <div class="crumb" id="crumb"></div>
+      <div class="finder"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input id="finder" placeholder="Employee ID or name" autocomplete="off"><div id="finderList" class="finder-list hidden"></div></div>
+    </header>
+    <div id="view" class="view"></div>
+  </main>
+</div>
+<div id="toast" class="toast hidden"></div>
+<div id="modalRoot"></div>
+<div id="printRoot"></div>
+<script src="print-fit.js?v=202611181804"></script>
+<script src="core.js?v=202611181804"></script>
+<script src="windows.js?v=202611181804"></script>
+<script src="finance.js?v=202611181804"></script>
+<script src="printpack.js?v=202611181804"></script>
+<script src="report.js?v=202611181804"></script>
+<script src="admin.js?v=202611181804"></script>
+<script>boot();</script>
+</body>
+</html>

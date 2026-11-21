@@ -1,0 +1,12 @@
+{
+  "name": "updated-fsa",
+  "version": "1.0.0",
+  "description": "Final Settlement - HR, Marketing, Finance, Master Data, Setting",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "demo": "node demo/seed.js"
+  },
+  "license": "ISC",
+  "dependencies": { "bcryptjs": "^3.0.3", "exceljs": "^4.4.0", "express": "^5.2.1", "express-session": "^1.19.0" }
+}
